@@ -3,7 +3,7 @@
   "description": "include multiple twig templates at once",
   "autoload": {
     "psr-4": {
-      "phmLabs\\FormValidatorBundle\": "src/"
+      "phmLabs\\FormValidatorBundle\\": "src/"
     }
   }
 }
