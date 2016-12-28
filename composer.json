@@ -1,0 +1,9 @@
+{
+  "name": "phmlabs/formvalidatorbundle",
+  "description": "include multiple twig templates at once",
+  "autoload": {
+    "psr-4": {
+      "phmLabs\\FormValidatorBundle\": "src/"
+    }
+  }
+}
