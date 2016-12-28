@@ -1,0 +1,5 @@
+phm_labs_form_validator_validate:
+    path:     /form/validate/
+    defaults: { _controller: phmLabsFormValidatorBundle:Default:validate }
+    options:
+        expose: true
