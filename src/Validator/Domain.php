@@ -11,6 +11,10 @@ class Domain implements Validator
 
     public function isValid($value)
     {
-        return strpos($value, '/') === false;
+        if (strpos($value, '/') !== false) {
+            return false;
+        }
+
+        return filter_var('http://' . $value, FILTER_VALIDATE_URL) !== false;
     }
 }
