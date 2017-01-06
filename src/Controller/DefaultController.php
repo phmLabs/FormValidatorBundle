@@ -2,6 +2,7 @@
 
 namespace phmLabs\FormValidatorBundle\Controller;
 
+use phmLabs\FormValidatorBundle\Validator\Domain;
 use phmLabs\FormValidatorBundle\Validator\Handler;
 use phmLabs\FormValidatorBundle\Validator\XPath;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,6 +20,7 @@ class DefaultController extends Controller
     {
         $this->validationHandler = new Handler();
         $this->validationHandler->addValidator('xpath', new XPath());
+        $this->validationHandler->addValidator('domain', new Domain());
     }
 
     public function validateAction(Request $request)
