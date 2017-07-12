@@ -16,7 +16,11 @@ class Handler
 
     public function isValid($type, $value)
     {
-        return $this->validators[$type]->isValid($value);
+        if (array_key_exists($type, $this->validators)) {
+            return $this->validators[$type]->isValid($value);
+        } else {
+            throw new \RuntimeException('Unknown validator: ' . $value);
+        }
     }
 
     public function getValidationFailureMessage($type, $value)

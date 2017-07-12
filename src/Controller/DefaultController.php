@@ -2,9 +2,10 @@
 
 namespace phmLabs\FormValidatorBundle\Controller;
 
-use phmLabs\FormValidatorBundle\Validator\Domain;
+use phmLabs\FormValidatorBundle\Validator\Rules\Domain;
 use phmLabs\FormValidatorBundle\Validator\Handler;
-use phmLabs\FormValidatorBundle\Validator\XPath;
+use phmLabs\FormValidatorBundle\Validator\Rules\NonSpaceEnclosing;
+use phmLabs\FormValidatorBundle\Validator\Rules\XPath;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,11 +22,13 @@ class DefaultController extends Controller
         $this->validationHandler = new Handler();
         $this->validationHandler->addValidator('xpath', new XPath());
         $this->validationHandler->addValidator('domain', new Domain());
+        $this->validationHandler->addValidator('nonspaceenclosing', new NonSpaceEnclosing());
     }
 
     public function validateAction(Request $request)
     {
         $this->initValidationHandler();
+
         $type = $request->get('type');
         $value = $request->get('value');
         $element = $request->get('element');
@@ -39,6 +42,5 @@ class DefaultController extends Controller
         } else {
             return new JsonResponse(['message' => $this->validationHandler->getValidationFailureMessage($type, $value), 'isValid' => false, 'element' => $element]);
         }
-
     }
 }

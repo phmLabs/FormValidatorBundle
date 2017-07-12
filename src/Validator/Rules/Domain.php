@@ -1,6 +1,8 @@
 <?php
 
-namespace phmLabs\FormValidatorBundle\Validator;
+namespace phmLabs\FormValidatorBundle\Validator\Rules;
+
+use phmLabs\FormValidatorBundle\Validator\Validator;
 
 class Domain implements Validator
 {
