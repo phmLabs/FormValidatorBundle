@@ -5,6 +5,7 @@ namespace phmLabs\FormValidatorBundle\Controller;
 use phmLabs\FormValidatorBundle\Validator\Rules\Domain;
 use phmLabs\FormValidatorBundle\Validator\Handler;
 use phmLabs\FormValidatorBundle\Validator\Rules\NonSpaceEnclosing;
+use phmLabs\FormValidatorBundle\Validator\Rules\Url;
 use phmLabs\FormValidatorBundle\Validator\Rules\XPath;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,6 +23,7 @@ class DefaultController extends Controller
         $this->validationHandler = new Handler();
         $this->validationHandler->addValidator('xpath', new XPath());
         $this->validationHandler->addValidator('domain', new Domain());
+        $this->validationHandler->addValidator('url', new Url());
         $this->validationHandler->addValidator('nonspaceenclosing', new NonSpaceEnclosing());
     }
 
