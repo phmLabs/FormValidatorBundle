@@ -42,7 +42,19 @@ class DefaultController extends Controller
         if ($this->validationHandler->isValid($type, $value)) {
             return new JsonResponse(['message' => 'The given value is valid (' . $type . ')', 'isValid' => true, 'element' => $element]);
         } else {
-            return new JsonResponse(['message' => $this->validationHandler->getValidationFailureMessage($type, $value), 'isValid' => false, 'element' => $element]);
+            $repairedValue = $this->validationHandler->getRepairedValue($type, $value);
+
+            $response = [
+                'message' => $this->validationHandler->getValidationFailureMessage($type, $value),
+                'isValid' => false,
+                'element' => $element
+            ];
+
+            if ($repairedValue) {
+                $response['repairedValue'] = $repairedValue;
+            }
+
+            return new JsonResponse($response);
         }
     }
 }

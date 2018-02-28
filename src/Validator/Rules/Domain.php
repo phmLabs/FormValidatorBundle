@@ -2,9 +2,10 @@
 
 namespace phmLabs\FormValidatorBundle\Validator\Rules;
 
-use phmLabs\FormValidatorBundle\Validator\Validator;
+use GuzzleHttp\Psr7\Uri;
+use phmLabs\FormValidatorBundle\Validator\RepairAwareValidator;
 
-class Domain implements Validator
+class Domain implements RepairAwareValidator
 {
     public function getValidationFailureMessage($value)
     {
@@ -29,5 +30,15 @@ class Domain implements Validator
         }
 
         return filter_var('http://' . $value, FILTER_VALIDATE_URL) !== false;
+    }
+
+    public function getRepairedValue($value)
+    {
+        try {
+            $url = new Uri('https://' . $value);
+            return $url->getHost();
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }
