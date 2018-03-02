@@ -35,7 +35,13 @@ class Domain implements RepairAwareValidator
     public function getRepairedValue($value)
     {
         try {
-            $url = new Uri('https://' . $value);
+            if (strpos($value, 'http') === 0) {
+                $url = $value;
+            } else {
+                $url = 'https://' . $value;
+            }
+
+            $url = new Uri($url);
             return $url->getHost();
         } catch (\Exception $e) {
             return false;
