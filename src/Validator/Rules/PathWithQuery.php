@@ -36,10 +36,17 @@ class PathWithQuery implements RepairAwareValidator
                 $query = '';
             }
 
-            return $url->getPath() . $query;
+            $pathWithQuery = $url->getPath() . $query;
+
+            if ($pathWithQuery) {
+                return $pathWithQuery;
+            } else {
+                return '/';
+            }
         }
 
         if (substr($value, 0, 1) != '/') {
+
             return '/' . $value;
         }
 
