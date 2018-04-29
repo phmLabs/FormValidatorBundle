@@ -7,7 +7,7 @@ use phmLabs\FormValidatorBundle\Validator\RepairAwareValidator;
 
 class Domain implements RepairAwareValidator
 {
-    public function getValidationFailureMessage($value)
+    public function getValidationFailureMessage($value, $parameters = [])
     {
         if (strpos($value, 'http') === 0) {
             $url = $value;
@@ -23,7 +23,7 @@ class Domain implements RepairAwareValidator
         }
     }
 
-    public function isValid($value)
+    public function isValid($value, $parameters = [])
     {
         if (strpos($value, '/') !== false) {
             return false;
@@ -32,7 +32,7 @@ class Domain implements RepairAwareValidator
         return filter_var('http://' . $value, FILTER_VALIDATE_URL) !== false;
     }
 
-    public function getRepairedValue($value)
+    public function getRepairedValue($value, $parameters = [])
     {
         try {
             if (strpos($value, 'http') === 0) {

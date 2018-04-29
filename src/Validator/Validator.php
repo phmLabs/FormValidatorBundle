@@ -5,7 +5,7 @@ namespace phmLabs\FormValidatorBundle\Validator;
 
 interface Validator
 {
-    public function getValidationFailureMessage($value);
+    public function getValidationFailureMessage($value, $parameters = []);
 
-    public function isValid($value);
+    public function isValid($value, $parameters = []);
 }

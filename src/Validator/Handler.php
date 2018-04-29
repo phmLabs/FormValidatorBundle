@@ -14,24 +14,25 @@ class Handler
         $this->validators[$alias] = $validator;
     }
 
-    public function isValid($type, $value)
+    public function isValid($type, $value, $parameters = [])
     {
         if (array_key_exists($type, $this->validators)) {
-            return $this->validators[$type]->isValid($value);
+            return $this->validators[$type]->isValid($value, $parameters);
         } else {
             throw new \RuntimeException('Unknown validator: ' . $value);
         }
     }
 
-    public function getValidationFailureMessage($type, $value)
+    public function getValidationFailureMessage($type, $value, $parameters = [])
     {
-        return $this->validators[$type]->getValidationFailureMessage($value);
+        return $this->validators[$type]->getValidationFailureMessage($value, $parameters);
     }
 
-    public function getRepairedValue($type, $value)
+    public function getRepairedValue($type, $value, $parameters = [])
     {
-        if ($this->validators[$type] instanceof RepairAwareValidator) {
-            return $this->validators[$type]->getRepairedValue($value);
+        $validator = $this->validators[$type];
+        if ($validator instanceof RepairAwareValidator) {
+            return $validator->getRepairedValue($value, $parameters);
         } else {
             return false;
         }

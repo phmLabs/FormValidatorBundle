@@ -34,7 +34,16 @@ ValidationForm.prototype.init = function (context) {
     $(context + ' input[data-validation-type]').on('change', function (e) {
         formHandler.validateInput(this);
     });
-}
+
+    $(context + ' form[data-submit-on-failure]').on('submit', function (e) {
+        $(this).find('input').each(function () {
+            if ($(this).hasClass('inputInvalid')) {
+                return false;
+            }
+        });
+        return true;
+    });
+};
 
 ValidationForm.prototype.reset = function (context) {
     if (!context) {
@@ -42,25 +51,31 @@ ValidationForm.prototype.reset = function (context) {
     }
 
     this.onReset(context);
-}
+};
 
 ValidationForm.prototype.validateInput = function (element) {
     value = $(element).val();
     type = $(element).attr('data-validation-type');
 
-    strict = !($(element).attr('data-validation-strict') == "false");
+    strict = !($(element).attr('data-validation-strict') === "false");
+
+    if ($(element).attr('data-validation-parameters')) {
+        parameters = $(element).attr('data-validation-parameters');
+    } else {
+        parameters = '{}';
+    }
 
     id = $(element).attr('id');
 
     serviceUrl = Routing.generate('phm_labs_form_validator_validate');
 
-    onSuccess = this.onSuccess;
-    onFailure = this.onFailure;
+    var onSuccess = this.onSuccess;
+    var onFailure = this.onFailure;
 
     $.ajax({
         type: "POST",
         url: serviceUrl,
-        data: {'value': value, 'type': type, 'element': id},
+        data: {'value': value, 'type': type, 'element': id, 'parameters': parameters},
     })
         .done(function (data) {
             isValid = data['isValid'];
@@ -70,4 +85,4 @@ ValidationForm.prototype.validateInput = function (element) {
                 onFailure(data, value, type, element, strict);
             }
         });
-}
+};

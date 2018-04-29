@@ -7,12 +7,12 @@ use phmLabs\FormValidatorBundle\Validator\RepairAwareValidator;
 
 class PathWithQuery implements RepairAwareValidator
 {
-    public function getValidationFailureMessage($value)
+    public function getValidationFailureMessage($value, $parameters = [])
     {
         return "The given path is not valid.";
     }
 
-    public function isValid($value)
+    public function isValid($value, $parameters = [])
     {
         if (strpos($value, '://') !== false) {
             return false;
@@ -25,7 +25,7 @@ class PathWithQuery implements RepairAwareValidator
         }
     }
 
-    public function getRepairedValue($value)
+    public function getRepairedValue($value, $parameters = [])
     {
         if (strpos($value, '://') !== false) {
             $url = new Uri($value);
