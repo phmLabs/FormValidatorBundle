@@ -36,6 +36,10 @@ class Url implements Validator
 
     public function isValid($value, $parameters = [])
     {
+        if (strpos($value, '@') === 0) {
+            return true;
+        }
+
         if (!filter_var($value, FILTER_VALIDATE_URL)) {
             return false;
         }
