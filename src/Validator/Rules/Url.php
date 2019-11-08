@@ -15,6 +15,10 @@ class Url implements Validator
 
     public function getValidationFailureMessage($value, $parameters = [])
     {
+        if (strpos($value, ' ') !== false) {
+            return "Spaces in URLs must be encoded (rfc1738). Please use %20 instead.";
+        }
+
         if (!filter_var($value, FILTER_VALIDATE_URL)) {
             if (array_key_exists('domain', $parameters)) {
                 $domain = $parameters['domain'];
@@ -29,7 +33,7 @@ class Url implements Validator
             $uri = new Uri($value);
 
             if ($this->getDomain($uri) != $parameters['domain']) {
-                return "The given url's domain must be " . $parameters['domain'] . '.';
+                return "The given URL's domain must be " . $parameters['domain'] . '.';
             }
         }
     }
@@ -38,6 +42,10 @@ class Url implements Validator
     {
         if (strpos($value, '@') === 0) {
             return true;
+        }
+
+        if (strpos($value, ' ') !== false) {
+            return false;
         }
 
         if (!filter_var($value, FILTER_VALIDATE_URL)) {

@@ -39,7 +39,6 @@ class DefaultController extends Controller
         $value = $request->get('value');
         $element = $request->get('element');
 
-
         $parameters = json_decode($request->get('parameters'), true);
 
         if (!$element) {
